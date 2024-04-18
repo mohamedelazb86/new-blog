@@ -38,3 +38,15 @@ def delete_post(request,id):
     post.delete()
     return redirect('/posts/')
 
+def Update_post(request,id):
+    post=Post.objects.get(id=id)
+    if request.method == 'POST':
+        form=PostForm(request.POST,request.FILES,instance=post)
+        if form.is_valid():
+            myform=form.save(commit=False)
+            form.save()
+            return redirect('/posts/')
+    else:
+        form=PostForm(instance=post)
+    return render(request,'posts/update_post.html',{'form':form})
+
