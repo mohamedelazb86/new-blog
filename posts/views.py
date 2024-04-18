@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .models import Post
-from .form import PostForm
+from .models import Post,Comment
+from .form import PostForm,CommentForm
 # create crud operation by fbv
 
 def post_list(request):
@@ -14,9 +14,22 @@ def post_list(request):
 
 def post_detail(request,slug):
     post=Post.objects.get(slug=slug)
+    comments=Comment.objects.filter(post=post)
+    if request.method=='POST':
+        form=CommentForm(request.POST)
+        form.is_valid()
+        myform=form.save(commit=False)
+        myform.post=post
+        form.save()
+        return redirect('/posts/')
+    else:
+        form=CommentForm()
+
 
     context={
-        'post':post
+        'post':post,
+        'comments':comments,
+        'form':form,
     }
 
     return render(request,'posts/post_detail.html',context)
