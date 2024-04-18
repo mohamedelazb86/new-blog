@@ -29,7 +29,7 @@ class Post(models.Model):
 class Category(models.Model):
     name=models.CharField(max_length=120)
 
-    def _str__(self):
+    def __str__(self):
         return self.name
     
 class Comment(models.Model):
