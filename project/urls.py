@@ -19,10 +19,19 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/',include('posts.urls')),
     path('summernote/', include('django_summernote.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -16,10 +16,12 @@ class Post_Update(UpdateView):
     model=Post
     fields='__all__'
     template_name='posts/update_post.html'
+    success_url='/posts/'
 
 class Create_Post(CreateView):
     model=Post
     fields='__all__'
     template_name='posts/create_post.html'
+    success_url='/posts/'
 
 
